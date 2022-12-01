@@ -22,6 +22,8 @@
 
 3. API 테스트
 
+- [API 테스트 링크](http://localhost:8080/swagger-ui/index.html)
+
 - Root URL : http://localhost:8080
 
 - 주식 조회
@@ -88,3 +90,4 @@
 - Docker
 - Mysql
 - Openfeign
+- Springdoc-openapi
