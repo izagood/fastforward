@@ -1,16 +1,15 @@
 package com.fastforward.stock.domain
 
 import jakarta.persistence.*
-import java.time.LocalDateTime
 
 @Entity
 class Stock(
-    high: Long,
-    low: Long,
+    timestamp: Long,
+    volume: Long,
     open: Long,
     close: Long,
-    volume: Long,
-    timestamp: LocalDateTime,
+    high: Long,
+    low: Long,
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +26,6 @@ class Stock(
 
     private val volume: Long = volume
 
-    private val timestamp: LocalDateTime = timestamp
+    private val timestamp: Long = timestamp
 
 }
