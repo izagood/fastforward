@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: fastforward
+    restart: always
+    platform: linux/amd64
+    ports:
+      - 3306:3306
+    volumes:
+      - fastforward-db-data:/etc/data
+    environment:
+      MYSQL_DATABASE: fastforward
+      MYSQL_ROOT_PASSWORD: stock1234
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_USER: stock
+      MYSQL_PASSWORD: s1234
+      TZ: Asia/Seoul
+    command: [ "mysqld", "--character-set-server=utf8mb4", "--collation-server=utf8mb4_general_ci" ]
+
+volumes:
+  fastforward-db-data:
