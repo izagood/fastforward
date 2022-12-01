@@ -23,42 +23,55 @@ class StockService(
 
         with(request) {
 
-            val senderResponse =
-                stockSender.getStock(symbol, interval, range).body ?: throw BaseException(
-                    HttpStatus.BAD_REQUEST,
-                    "stock 정보가 없습니다."
-                )
+            val senderResponse = stockSender.getStock(symbol, interval, range).body ?: throw BaseException(
+                HttpStatus.BAD_REQUEST,
+                "stock 정보가 없습니다."
+            )
 
             val result = senderResponse.chart.result[0]
+
             val timestamp = result.timestamp
             val quote = result.indicators.quote[0]
+
             val volume = quote.volume
             val open = quote.open
             val close = quote.close
             val high = quote.high
             val low = quote.low
 
-            val stockList = ArrayList<Stock>()
-
-            val loop = timestamp.size
-            for (i in 0 until loop) {
-                stockList.add(
-                    Stock(
-                        timestamp[i],
-                        volume[i],
-                        open[i],
-                        close[i],
-                        high[i],
-                        low[i]
-                    )
-                )
-            }
-
-            stockRepository.saveAll(stockList)
+            saveStocks(timestamp, volume, open, close, high, low)
 
             return GetStockResponse(timestamp, volume, open, close, high, low)
         }
 
+    }
+
+    private fun saveStocks(
+        timestamp: List<Long>,
+        volume: List<Long>,
+        open: List<Long>,
+        close: List<Long>,
+        high: List<Long>,
+        low: List<Long>,
+    ) {
+
+        val stockList = ArrayList<Stock>()
+
+        val loop = timestamp.size
+        for (i in 0 until loop) {
+            stockList.add(
+                Stock(
+                    timestamp[i],
+                    volume[i],
+                    open[i],
+                    close[i],
+                    high[i],
+                    low[i]
+                )
+            )
+        }
+
+        stockRepository.saveAll(stockList)
     }
 
 }
