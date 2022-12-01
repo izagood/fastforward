@@ -1,6 +1,7 @@
 package com.fastforward.stock.domain
 
-import jakarta.persistence.*
+import javax.persistence.*
+
 
 @Entity
 class Stock(
